@@ -1,85 +1,37 @@
 <template>
     <div class="container">
-        <section class="articles">
-            <h1>Статьи & Новости</h1>
-            <div class="articles-grid">
-                <div v-for="(article, index) in articles" :key="index" class="article-card">
-                    <img :src="article.image" alt="Article Image" />
-                    <div class="article-info">
-                        <span class="category">{{ article.category }}</span>
-                        <h3>{{ article.title }}</h3>
-                        
-                        <div class="button-flex"><p>{{ article.date }}</p> <button class="project-card-button"><img src="../assets/images/project-card-button.png" alt="button"></button></div>
-                    </div>
-                </div>
-                
-            </div>
-        </section>
-    
-    <div class="pagination">
-      <button v-for="page in totalPages" :key="page" @click="currentPage = page">{{ page }}</button>
+      <header class="header">
+          <div class="logo-container">
+              <img src="../assets/images/Logo.png" alt="Logo" class="logo">
+              <span class="logo-text">Interno</span>
+          </div>
+          <nav class="nav">
+              <ul class="nav-list">
+                  <li class="nav-item"><a href="index.html" class="nav-link">Домой</a></li>
+                  <li class="nav-item"><a href="blogDetails.html" class="nav-link">Проект</a></li>
+                  <li class="nav-item"><a href="blog.html" class="nav-link">Блог</a></li>
+              </ul>
+          </nav>
+      </header>
     </div>
-</div>
 </template>
 
 <script>
 export default {
-  name: 'VueBlog',
+  name: 'VueHeader',
 
   data() {
     return {
-        currentPage: 1,
-      articlesPerPage: 6,
-      articles: [
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Кухни',
-          title: 'Создадим лучший макет перепланировки',
-          date: '26 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Для Жизни',
-          title: 'Лучшие интерьерные идеи по низкой цене',
-          date: '22 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Интерьера',
-          title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Интерьера',
-          title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Интерьера',
-          title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Интерьера',
-          title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
-        },
-      ]
+      
     };
   },
 
-  computed: {
-    paginatedArticles() {
-      const start = (this.currentPage - 1) * this.articlesPerPage;
-      const end = start + this.articlesPerPage;
-      return this.articles.slice(start, end);
-    },
-    totalPages() {
-      return Math.ceil(this.articles.length / this.articlesPerPage);
-    }
+  mounted() {
+    
+  },
+
+  methods: {
+    
   },
 };
 </script>

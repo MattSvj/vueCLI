@@ -1,90 +1,78 @@
 <template>
-    <div class="container">
-        <section class="articles">
-            <h1>Статьи & Новости</h1>
-            <div class="articles-grid">
-                <div v-for="(article, index) in articles" :key="index" class="article-card">
-                    <img :src="article.image" alt="Article Image" />
-                    <div class="article-info">
-                        <span class="category">{{ article.category }}</span>
-                        <h3>{{ article.title }}</h3>
-                        
-                        <div class="button-flex"><p>{{ article.date }}</p> <button class="project-card-button"><img src="../assets/images/project-card-button.png" alt="button"></button></div>
-                    </div>
+    <div>
+    <div class="container-blog">
+        <section class="blog-banner">
+            <img src="../assets/images/projectBanner.png" alt="image" class="">
+            <div class="blog-intro">
+                <div class="blog-title">
+                    <h1>Наш проект</h1>
+                    <div class="links">
+                        <a class="nav-link" href="index.html">Домой /</a>
+                        <a class="nav-link" href="blog.html">Проект</a>
+                    </div>  
                 </div>
-                
             </div>
         </section>
-    
-    <div class="pagination">
-      <button v-for="page in totalPages" :key="page" @click="currentPage = page">{{ page }}</button>
+    </div>
+    <div class="container">
+      <div>
+        <button v-for="(category, index) in categories" :key="index" @click="selectCategory(category)">{{ category }}</button>
+      </div>
+      <div v-for="(project, index) in filteredProjects" :key="index">
+        <img :src="project.image" alt="Изображение проекта" />
+        <h2>{{ project.name }}</h2>
+        <p>{{ project.description }}</p>
+        <button>Кнопка проекта</button>
+      </div>
     </div>
 </div>
-</template>
-
-<script>
-export default {
-  name: 'VueBlog',
-
-  data() {
-    return {
-        currentPage: 1,
-      articlesPerPage: 6,
-      articles: [
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Кухни',
-          title: 'Создадим лучший макет перепланировки',
-          date: '26 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Для Жизни',
-          title: 'Лучшие интерьерные идеи по низкой цене',
-          date: '22 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Интерьера',
-          title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Интерьера',
-          title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Интерьера',
-          title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Интерьера',
-          title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
-        },
-      ]
-    };
-  },
-
-  computed: {
-    paginatedArticles() {
-      const start = (this.currentPage - 1) * this.articlesPerPage;
-      const end = start + this.articlesPerPage;
-      return this.articles.slice(start, end);
+  </template>
+  
+  <script>
+  export default {
+    name: 'VueProject',
+    data() {
+      return {
+        projects: [
+          { name: 'Проект 1', description: 'Описание проекта 1', category: 'Ванная комната', image: 'url_изображения_1' },
+          { name: 'Минималистичная спальня', description: 'Декор / Планировка', category: 'Спальня', image: '/assets/images/projectBedroom1.png' },
+          { name: 'Минималистичная спальня', description: 'Декор / Планировка', category: 'Спальня', image: '/assets/images/projectBedroom2.png' },
+          { name: 'Классическая спальня', description: 'Декор / Планировка', category: 'Спальня', image: '/assets/images/projectBedroom3.png' },
+          { name: 'Современная спальня', description: 'Декор / Планировка', category: 'Спальня', image: '/assets/images/projectBedroom4.png' },
+          { name: 'Проект 2', description: 'Описание проекта 2', category: 'Спальня', image: 'url_изображения_2' },
+          { name: 'Проект 2', description: 'Описание проекта 2', category: 'Спальня', image: 'url_изображения_2' },
+          { name: 'Проект 2', description: 'Описание проекта 2', category: 'Спальня', image: 'url_изображения_2' },
+          { name: 'Проект 2', description: 'Описание проекта 2', category: 'Спальня', image: 'url_изображения_2' },
+          { name: 'Проект 2', description: 'Описание проекта 2', category: 'Спальня', image: 'url_изображения_2' },
+          { name: 'Проект 2', description: 'Описание проекта 2', category: 'Спальня', image: 'url_изображения_2' },
+          { name: 'Проект 2', description: 'Описание проекта 2', category: 'Спальня', image: 'url_изображения_2' },
+          { name: 'Проект 2', description: 'Описание проекта 2', category: 'Спальня', image: 'url_изображения_2' },
+          // добавьте другие проекты по мере необходимости
+        ],
+        categories: ['Ванная комната', 'Спальня', 'Кухня', 'Гостинная'],
+        selectedCategory: '',
+      };
     },
-    totalPages() {
-      return Math.ceil(this.articles.length / this.articlesPerPage);
-    }
-  },
-};
-</script>
+    computed: {
+      filteredProjects() {
+        if(this.selectedCategory === '') {
+          return this.projects;
+        } else {
+          return this.projects.filter(project => project.category === this.selectedCategory);
+        }
+      }
+    },
+    methods: {
+      selectCategory(category) {
+        this.selectedCategory = category;
+      },
+    },
+  };
+  </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+
 body {
     margin: 0;
     font-family: "DM Serif Display", serif;
@@ -921,3 +909,4 @@ body {
     display: flex;
 }
 </style>
+  

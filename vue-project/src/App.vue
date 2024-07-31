@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <VueBlog/>
+    <VueProject/>
   </div>
 </template>
 
 <script>
-import VueBlog from './components/Blog.vue';
+import VueProject from './components/Project.vue';
 
 export default {
   name: 'App',
   components: {
-    VueBlog
+    VueProject
   }
 }
 </script>

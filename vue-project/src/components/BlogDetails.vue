@@ -3,7 +3,7 @@
     <div class="BlogDetails">
         <div class="article-details">
             <h1>{{ article.title }}</h1>
-            <img src="images/blog-details1.png" alt="image">
+            <img src="../assets/images/blog-details1.png" alt="image">
             <p>{{ article.date }}</p>
             <div v-html="article.content"></div>
         </div>

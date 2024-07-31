@@ -1,85 +1,46 @@
 <template>
-    <div class="container">
-        <section class="articles">
-            <h1>Статьи & Новости</h1>
-            <div class="articles-grid">
-                <div v-for="(article, index) in articles" :key="index" class="article-card">
-                    <img :src="article.image" alt="Article Image" />
-                    <div class="article-info">
-                        <span class="category">{{ article.category }}</span>
-                        <h3>{{ article.title }}</h3>
-                        
-                        <div class="button-flex"><p>{{ article.date }}</p> <button class="project-card-button"><img src="../assets/images/project-card-button.png" alt="button"></button></div>
-                    </div>
-                </div>
-                
+  <div class="container">
+      <footer class="footer">
+          <div class="footer-socialmedia">
+            <div class="logo-flex">
+              <img src="../assets/images/Logo.png" alt="logo" class="logo">
+              <h1>Interno</h1>
             </div>
-        </section>
-    
-    <div class="pagination">
-      <button v-for="page in totalPages" :key="page" @click="currentPage = page">{{ page }}</button>
+              <a href="#"><img src="../assets/images/twitter.png" alt="twitter-link"></a>
+              <a href="#"><img src="../assets/images/in.png" alt="in-link"></a>
+          </div>
+          <div class="footer-links">
+              <h1>Cтраницы</h1>
+              <a href="#">Домой</a>
+              <a href="#">Проект</a>
+              <a href="#">Блог</a>
+          </div>
+          <div class="footer-contacts">
+              <h1>Конта <br> кты</h1>
+              <p>55 East Birchwood Ave. <br> Brooklyn, New York 11201</p>
+              <p>contact@interno.com</p>
+              <p>(123) 456 - 7890</p>
+          </div>
+      </footer>
     </div>
-</div>
 </template>
 
 <script>
 export default {
-  name: 'VueBlog',
+  name: 'VueFooter',
 
   data() {
     return {
-        currentPage: 1,
-      articlesPerPage: 6,
-      articles: [
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Кухни',
-          title: 'Создадим лучший макет перепланировки',
-          date: '26 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Для Жизни',
-          title: 'Лучшие интерьерные идеи по низкой цене',
-          date: '22 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Интерьера',
-          title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Интерьера',
-          title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Интерьера',
-          title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
-        },
-        {
-          image: '../assets/images/project-card-button.png',
-          category: 'Дизайн Интерьера',
-          title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
-        },
-      ]
+      
     };
   },
 
-  computed: {
-    paginatedArticles() {
-      const start = (this.currentPage - 1) * this.articlesPerPage;
-      const end = start + this.articlesPerPage;
-      return this.articles.slice(start, end);
-    },
-    totalPages() {
-      return Math.ceil(this.articles.length / this.articlesPerPage);
-    }
+  mounted() {
+    
+  },
+
+  methods: {
+    
   },
 };
 </script>
