@@ -1,72 +1,3 @@
-<template>
-    <div>
-    <div class="container-blog">
-        <section class="blog-banner">
-            <img src="../assets/images/projectBanner.png" alt="image" class="">
-            <div class="blog-intro">
-                <div class="blog-title">
-                    <h1>Наш проект</h1>
-                    <div class="links">
-                        <a class="nav-link" href="index.html">Домой /</a>
-                        <a class="nav-link" href="blog.html">Проект</a>
-                    </div>  
-                </div>
-            </div>
-        </section>
-    </div>
-    <div class="container">
-      <div>
-        <button v-for="(category, index) in categories" :key="index" @click="selectCategory(category)">{{ category }}</button>
-      </div>
-      <div v-for="(project, index) in filteredProjects" :key="index">
-        <img :src="project.image" alt="Изображение проекта" />
-        <h2>{{ project.name }}</h2>
-        <p>{{ project.description }}</p>
-        <button>Кнопка проекта</button>
-      </div>
-    </div>
-</div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'VueProject',
-    data() {
-      return {
-        projects: [
-          { name: 'Проект 1', description: 'Описание проекта 1', category: 'Ванная комната', image: 'url_изображения_1' },
-          { name: 'Минималистичная спальня', description: 'Декор / Планировка', category: 'Спальня', image: '/assets/images/projectBedroom1.png' },
-          { name: 'Минималистичная спальня', description: 'Декор / Планировка', category: 'Спальня', image: '/assets/images/projectBedroom2.png' },
-          { name: 'Классическая спальня', description: 'Декор / Планировка', category: 'Спальня', image: '/assets/images/projectBedroom3.png' },
-          { name: 'Современная спальня', description: 'Декор / Планировка', category: 'Спальня', image: '/assets/images/projectBedroom4.png' },
-          { name: 'Проект 2', description: 'Описание проекта 2', category: 'Спальня', image: 'url_изображения_2' },
-          { name: 'Проект 2', description: 'Описание проекта 2', category: 'Спальня', image: 'url_изображения_2' },
-          { name: 'Проект 2', description: 'Описание проекта 2', category: 'Спальня', image: 'url_изображения_2' },
-          { name: 'Проект 2', description: 'Описание проекта 2', category: 'Спальня', image: 'url_изображения_2' },
-          
-        ],
-        categories: ['Ванная комната', 'Спальня', 'Кухня', 'Гостинная'],
-        selectedCategory: '',
-      };
-    },
-    computed: {
-      filteredProjects() {
-        if(this.selectedCategory === '') {
-          return this.projects;
-        } else {
-          return this.projects.filter(project => project.category === this.selectedCategory);
-        }
-      }
-    },
-    methods: {
-      selectCategory(category) {
-        this.selectedCategory = category;
-      },
-    },
-  };
-  </script>
-
-<style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
 
 body {
@@ -409,7 +340,9 @@ body {
     height: auto;
   }
   
-
+  .article-info {
+    
+  }
   
   .article-category {
     position: relative;
@@ -472,7 +405,9 @@ body {
     
   }
   
-
+  .footer-links {
+    
+  }
   
   .footer-links a {
     
@@ -705,7 +640,18 @@ body {
     word-wrap: break-word;
 }
 
+.post-button {
 
+ 
+    
+    
+  
+}
+
+.post-button-img {
+  
+    
+}
 
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
@@ -904,5 +850,5 @@ body {
     gap: 10px;
     display: flex;
 }
-</style>
-  
+
+

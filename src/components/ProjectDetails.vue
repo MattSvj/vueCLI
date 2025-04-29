@@ -44,7 +44,7 @@ export default {
 };
 </script>
   
-  <style>
+<style>
   .minimalistic-bedroom {
   text-align: center;
 }
@@ -52,4 +52,4 @@ export default {
   width: 100%;
   height: auto;
 }
-  </style>
+</style>

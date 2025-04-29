@@ -1,20 +1,22 @@
 <template>
-    <div class="container">
-      <header class="header">
-          <div class="logo-container">
-              <img src="../assets/images/Logo.png" alt="Logo" class="logo">
-              <span class="logo-text">Interno</span>
-          </div>
-          <nav class="nav">
-              <ul class="nav-list">
-                
-                  <li class="nav-item"><a href="index.html" class="nav-link">Домой</a></li>
-                  <li class="nav-item"><a href="blogDetails.html" class="nav-link">Проект</a></li>
-                  <li class="nav-item"><a href="blog.html" class="nav-link">Блог</a></li>
-              </ul>
-          </nav>
-      </header>
-    </div>
+  <div class="container">
+    <header class="header">
+      <div class="logo-container">
+        <img src="../assets/images/Logo.png" alt="Logo" class="logo" />
+        <span class="logo-text">Lumen Studio</span>
+      </div>
+      <nav class="nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <router-link to="/request" class="request-btn">Оставить заявку</router-link>
+          </li>
+          <li class="nav-item"><router-link to="/">Домой</router-link></li>
+          <li class="nav-item"><router-link to="/project">Проект</router-link></li>
+          <li class="nav-item"><router-link to="/blog">Блог</router-link></li>
+        </ul>
+      </nav>
+    </header>
+  </div>
 </template>
 
 <script>

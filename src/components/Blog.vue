@@ -9,7 +9,7 @@
                         <span class="category">{{ article.category }}</span>
                         <h3>{{ article.title }}</h3>
                         
-                        <div class="button-flex"><p>{{ article.date }}</p> <button class="project-card-button"><img src="../assets/images/project-card-button.png" alt="button"></button></div>
+                        <div class="button-flex"><p>{{ article.date }}</p> <button class="project-card-button"><img src="@/assets/images/project-card-button.png" alt="button"></button></div>
                     </div>
                 </div>
                 
@@ -32,40 +32,40 @@ export default {
       articlesPerPage: 6,
       articles: [
         {
-          image: '../assets/images/project-card-button.png',
+          image: require('@/assets/images/Image6.png'),
           category: 'Дизайн Кухни',
           title: 'Создадим лучший макет перепланировки',
-          date: '26 Декабрь, 2022'
+          date: '26 Декабрь, 2024'
         },
         {
-          image: '../assets/images/project-card-button.png',
+          image: require('@/assets/images/Image7.png'),
           category: 'Дизайн Для Жизни',
           title: 'Лучшие интерьерные идеи по низкой цене',
-          date: '22 Декабрь, 2022'
+          date: '22 Декабрь, 2024'
         },
         {
-          image: '../assets/images/project-card-button.png',
+          image: require('@/assets/images/Image8.png'),
           category: 'Дизайн Интерьера',
           title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
+          date: '25 Декабрь, 2024'
         },
         {
-          image: '../assets/images/project-card-button.png',
+          image: require('@/assets/images/Image6.png'),
           category: 'Дизайн Интерьера',
           title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
+          date: '25 Декабрь, 2024'
         },
         {
-          image: '../assets/images/project-card-button.png',
+          image: require('@/assets/images/Image7.png'),
           category: 'Дизайн Интерьера',
           title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
+          date: '25 Декабрь, 2024'
         },
         {
-          image: '../assets/images/project-card-button.png',
+          image: require('@/assets/images/Image8.png'),
           category: 'Дизайн Интерьера',
           title: 'Лучшие интерьерные решения для офисов',
-          date: '25 Декабрь, 2022'
+          date: '25 Декабрь, 2024'
         },
       ]
     };

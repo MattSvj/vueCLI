@@ -37,7 +37,7 @@ export default {
     return {
         article: {
             title: 'Создадим лучший макет перепланировки',
-            date: '26 Декабрь, 2022',
+            date: '26 Декабрь, 2024',
             content: `
               <p>В своей статье от 1994-го года журнал «Before & After» отследил фразу «Lorem ipsum ...» до философского трактата Цицерона О пределах добра и зла, написанного в 45 году до нашей эры на латинском языке.</p>
               <p>В оригинале текст выглядит так «Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit ...», и переводится как «Нет никого, кто любил бы свою боль, кто искал бы ее и хотел бы чтобы она была у него. Потому что это боль...»</p>
@@ -49,7 +49,7 @@ export default {
             { id: 1, title: 'Article 1', date: '2024-07-01', excerpt: 'Summary of article 1', tags: ['Кухня'] },
             { id: 2, title: 'Article 2', date: '2024-07-02', excerpt: 'Summary of article 2', tags: ['Спальня'] },
             { id: 3, title: 'Article 3', date: '2024-07-03', excerpt: 'Summary of article 3', tags: ['Архитектура'] },
-            // Add more articles as needed
+            
           ], 
     };
   },

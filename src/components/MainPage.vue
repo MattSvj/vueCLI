@@ -1,33 +1,125 @@
 <template>
+    <body>
   <div class="container">
-      <footer class="footer">
-          <div class="footer-socialmedia">
-            <div class="logo-flex">
-              <img src="../assets/images/Logo.png" alt="logo" class="logo">
-              <h1>Lumen Studio</h1>
-            </div>
-              <a href="#"><img src="../assets/images/twitter.png" alt="twitter-link"></a>
-              <a href="#"><img src="../assets/images/in.png" alt="in-link"></a>
-          </div>
-          <div class="footer-links">
-              <h1>Cтраницы</h1>
-                  <router-link to="/">Домой</router-link>
-                  <router-link to="/project">Проект</router-link>
-                  <router-link to="/blog">Блог</router-link>
-          </div>
-          <div class="footer-contacts">
-              <h1>Контакты</h1>
-              <p>9 Осьмова <br> Гусь-Хрустальный, Владимирская обл. 601501</p>
-              <p>lumenstudio@mail.ru</p>
-              <p>8 (920) 757 14 50</p>
-          </div>
-      </footer>
+    <section class="banner">
+        <img src="@/assets/images/Image.png" alt="image" class="banner-image">
+        <div class="banner-content">
+            <h1>Пусть ваш дом <br> будет уникальным</h1>
+            <p>Существует много вариантов Lorem Ipsum, которые можно использовать</p>
+            <button class="banner-button">Начать <img src="@/assets/images/Vector.png" alt="arrow"></button>
+        </div>
+    </section>
+  </div>
+
+  <div class="container">
+    <div class="project-intro">
+        <h1>Следите за нашими проектами</h1>
+        <p>Хорошо известно, что читатель будет отвлекаться <br> на читабельный контент страницы</p>
     </div>
+    <section class="projects">
+      <div class="project-card">
+        <img src="@/assets/images/Image2.png" alt="Современная кухня">
+        <div class="card-content">
+          <div class="project-info">
+            <h3>Современная кухня</h3>
+            <p>Декор / Планировка</p>
+          </div>
+          <button class="project-card-button"><img src="@/assets/images/project-card-button.png" alt="button"></button>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="@/assets/images/Image3.png" alt="Современная кухня">
+        <div class="card-content">
+          <div class="project-info">
+            <h3>Современная кухня</h3>
+            <p>Декор / Планировка</p>
+          </div>
+          <button class="project-card-button"><img src="@/assets/images/project-card-button.png" alt="button"></button>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="@/assets/images/Image4.png" alt="Современная кухня">
+        <div class="card-content">
+          <div class="project-info">
+            <h3>Современная кухня</h3>
+            <p>Декор / Планировка</p>
+          </div>
+          <button class="project-card-button"><img src="@/assets/images/project-card-button.png" alt="button"></button>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="@/assets/images/Image5.png" alt="Современная кухня">
+        <div class="card-content">
+          <div class="project-info">
+            <h3>Современная кухня</h3>
+            <p>Декор / Планировка</p>
+          </div>
+          <button class="project-card-button"><img src="@/assets/images/project-card-button.png" alt="button"></button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-number">12</div>
+        <p>Лет опыта</p>
+      </div>
+      <img src="@/assets/images/Line.png" alt="line" class="stat-line">
+      <div class="stat">
+        <div class="stat-number">85</div>
+        <p>Успешных проектов</p>
+      </div>
+      <img src="@/assets/images/Line.png" alt="line" class="stat-line">
+      <div class="stat">
+        <div class="stat-number">15</div>
+        <p>Проектов в работе</p>
+      </div>
+      <img src="@/assets/images/Line.png" alt="line" class="stat-line">
+      <div class="stat">
+        <div class="stat-number">95</div>
+        <p>Счастливых клиентов</p>
+      </div>
+    </section>
+
+  <div class="container">
+    <section class="articles">
+      <h2>Статьи & <br> Новости</h2>
+      <p>Хорошо известно, что читатель будет отвлекаться <br> на читабельный контент страницы</p>
+      <div class="articles-grid">
+        <div class="article-card">
+          <img src="@/assets/images/Image6.png" alt="Article 1">
+          <div class="article-info">
+            <div class="article-category">Дизайн Кухни</div>
+            <h3>Создадим лучший макет перепланировки</h3>
+            <div class="button-flex"><p>26 Декабрь, 2024</p> <button class="project-card-button"><img src="@/assets/images/project-card-button.png" alt="button"></button></div>
+          </div>
+        </div>
+        <div class="article-card">
+          <img src="@/assets/images/Image7.png" alt="Article 2">
+          <div class="article-info">
+            <div class="article-category">Дизайн Для Жизни</div>
+            <h3>Лучшие интерьерные идеи по низкой цене</h3>
+            <div class="button-flex"><p>26 Декабрь, 2024</p> <button class="project-card-button"><img src="@/assets/images/project-card-button.png" alt="button"></button></div>
+          </div>
+        </div>
+        <div class="article-card">
+          <img src="@/assets/images/Image8.png" alt="Article 3">
+          <div class="article-info">
+            <div class="article-category">Дизайн Интерьера</div>
+            <h3>Лучшие интерьерные решения для офисов</h3>
+            <div class="button-flex"><p>26 Декабрь, 2024</p> <button class="project-card-button"><img src="@/assets/images/project-card-button.png" alt="button"></button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+</body>
 </template>
 
 <script>
 export default {
-  name: 'VueFooter',
+  name: 'VueMainPage',
 
   data() {
     return {
@@ -46,6 +138,8 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+
 body {
     margin: 0;
     font-family: "DM Serif Display", serif;
@@ -386,7 +480,9 @@ body {
     height: auto;
   }
   
-
+  .article-info {
+    
+  }
   
   .article-category {
     position: relative;
@@ -449,7 +545,9 @@ body {
     
   }
   
-
+  .footer-links {
+    
+  }
   
   .footer-links a {
     
@@ -510,375 +608,5 @@ body {
     align-items: center;
   }
 
-/* blog.html */
-
-.blog-banner {
-  height: 452px;
-  margin-bottom: 0px;
-}
-
-.blog-banner-image {
-  width: 100%;
-  height: auto;
   
-  
-  
-}
-
-.container-blog {
-  max-width: 1920px;
-  margin: 0 auto;
-}
-
-.blog-intro {
-  width: 503px;
-  height: 274px;
-  left: 708px;
-  bottom: 178px;
-  
- 
-  position: relative;
-  background: white;
-  border-top-left-radius: 37px;
-  border-top-right-radius: 37px;
-
-    
-}
-
-.blog-intro h1 {
-  width: 347px;
-  color: #292F36;
-  font-size: 50px;
-  font-family: DM Serif Display;
-  font-weight: 400;
-  line-height: 62.50px;
-  word-wrap: break-word;
-  margin-bottom: 0;
-}
-
-.links {
-  width: 125px;
-    color: #4D5053;
-    font-size: 22px;
-    font-family: Jost;
-    font-weight: 400;
-    line-height: 33px;
-    letter-spacing: 0.22px;
-    word-wrap: break-word;
-}
-
-
-.blog-title {
-  height: 192px;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  display: flex;
-}
-
-.latestPost {
-    width: 1201px;
-    height: 674px;
-    
-    
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 27px;
-    display: inline-flex;
-}
-
-.latestPost h1 {
-    color: #292F36;
-    font-size: 50px;
-    font-family: DM Serif Display;
-    font-weight: 400;
-    line-height: 62.50px;
-    letter-spacing: 1px;
-    word-wrap: break-word;
-    margin: 0;
-}
-
-.latestPost-box {
-  height: 584px;
-  padding: 22px;
-  box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.25);
-  border-radius: 62px;
-  border: 1px #E7E7E7 solid;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  display: flex;
-}
-
-.post {
-    width: 1157px;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 65px;
-    display: inline-flex;
-}
-
-.post-content {
-  width: 489px;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 41px;
-    display: inline-flex;
-}
-
-.post-subcontent {
-  height: 447px;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 22px;
-  display: flex;
-}
-
-.post-subcontent h3 {
-  width: 463px;
-    color: #292F36;
-    font-size: 25px;
-    font-family: DM Serif Display;
-    font-weight: 400;
-    line-height: 31.25px;
-    letter-spacing: 0.50px;
-    word-wrap: break-word;
-    margin: 0;
-}
-
-.post-subcontent p {
-  width: 469px;
-    color: #4D5053;
-    font-size: 22px;
-    font-family: Jost;
-    font-weight: 400;
-    line-height: 33px;
-    letter-spacing: 0.22px;
-    word-wrap: break-word;
-}
-
-.post-date {
-    width: 489px;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 214px;
-    display: inline-flex;
-}
-
-.post-date p {
-    width: 223px;
-    height: 33px;
-    color: #4D5053;
-    font-size: 16px;
-    font-family: Jost;
-    font-weight: 400;
-    text-transform: capitalize;
-    line-height: 24px;
-    letter-spacing: 0.16px;
-    word-wrap: break-word;
-}
-
-
-
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
-
-body {
-    margin: 0;
-    font-family: "DM Serif Display", serif;
-}
-  
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .articles {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.articles-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 27px;
-    
-}
-  
-.article-card {
-    padding: 21px;
-    box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.25);
-    border-radius: 62px;
-    border: 1px #E7E7E7 solid;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-.article-card img {
-    width: 100%;
-    height: auto;
-}
-
-.category {
-    position: relative;
-    width: 124px;
-    height: 41px;
-    left: 10px;
-    bottom: 70px;
-    background: white;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    color: #4D5053;
-    font-size: 16px;
-    font-family: Jost;
-    font-weight: 400;
-    text-transform: capitalize;
-    line-height: 24px;
-    letter-spacing: 0.16px;
-}
-
-.article-info h3 {
-    margin-top: 0;
-    text-align: left;
-    color: #292F36;
-    font-size: 25px;
-    font-family: DM Serif Display;
-    font-weight: 400;
-    line-height: 31.25px;
-    letter-spacing: 0.50px;
-    word-wrap: break-word;
-}
-
-.button-flex {
-    display: flex;
-    justify-content: space-between;
-}
-
-.project-card-button {
-    width: 52px;
-    height: 52px;
-    left: 0px;
-    top: 0px;
-    border: none;
-    background: #F4F0EC;
-    border-radius: 9999px;
-}
-
-.pagination {
-  margin-top: 20px;
-}
-.pagination button {
-  margin-right: 5px;
-  padding: 5px 10px;
-}
-
-
-
-
-
-
-
-
-/* Blog details */
-.Blog {
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 52px;
-  display: inline-flex;
-}
-
-.article-details h1 {
-    
-    color: #292F36;
-    font-size: 50px;
-    font-family: DM Serif Display;
-    font-weight: 400;
-    line-height: 62.50px;
-    letter-spacing: 1px;
-    word-wrap: break-word;
-}
-
-.article-details p {
-    
-    margin: 0;
-    color: #4D5053;
-    font-size: 22px;
-    font-family: Jost;
-    font-weight: 400;
-    line-height: 33px;
-    letter-spacing: 0.22px;
-    word-wrap: break-word;
-}
-
-.sidebar {
-    width: 345px;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 50px;
-    display: inline-flex;
-}
-
-.tags {
-    height: 200px;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 24px;
-    display: flex;
-}
-
-.tags p {
-  color: #292F36;
-  font-size: 25px;
-  font-family: DM Serif Display;
-  font-weight: 400;
-  line-height: 31.25px;
-  letter-spacing: 0.50px;
-  word-wrap: break-word;
-}
-
-.tags-content {
-  width: 300px;
-  height: 145px;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 11px;
-  display: flex;
-}
-
-.tag {
-  padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 9px;
-    padding-bottom: 9px;
-    background: #F4F0EC;
-    border-radius: 10px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    display: flex;
-}
-
-.tag.active {
-  color: white;
-  padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 9px;
-    padding-bottom: 9px;
-    background: #292F36;
-    border-radius: 10px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    display: flex;
-}
 </style>

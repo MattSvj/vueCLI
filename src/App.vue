@@ -1,17 +1,25 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
-      <router-link to="/non-existing">Non-Existing Page</router-link>
-    </nav>
-    <router-view></router-view> <!-- Здесь будет отображаться выбранный компонент -->
+    <Header />
+      <div class="page-layout">
+        <router-view name="default" />
+        <router-view name="form" />
+      </div>
+    <Footer />  
+    
+
   </div>
 </template>
 
 <script>
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 
 export default {
+  components: {
+    Header,
+    Footer,
+  },
   name: 'App'
 }
 </script>
