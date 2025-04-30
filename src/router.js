@@ -7,12 +7,25 @@ import ProjectDetails from "./components/ProjectDetails.vue";
 import MainPage from "./components/MainPage.vue";
 import Blog from "./components/Blog.vue";
 import RequestForm from './components/RequestForm.vue';
+import EmployeeLogin from '@/components/EmployeeLogin.vue';
+import RequestManagement from '@/components/RequestManagement.vue';
 
 Vue.use(Router);
 
 export default new Router({
   mode: "history", // Используем history mode для чистых URL
   routes: [
+    {
+      path: '/login',
+      name: 'Login',
+      components: {
+        default: EmployeeLogin,
+        form: MainPage,
+      }
+    },
+    { path: '/requests',
+      name: "Requests",
+      component: RequestManagement },
     {
       path: "/",
       name: "Home",

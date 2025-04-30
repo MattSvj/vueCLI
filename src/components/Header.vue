@@ -13,6 +13,17 @@
           <li class="nav-item"><router-link to="/">Домой</router-link></li>
           <li class="nav-item"><router-link to="/project">Проект</router-link></li>
           <li class="nav-item"><router-link to="/blog">Блог</router-link></li>
+
+          <li v-if="!isAuthorized">
+            <router-link to="/login">Войти</router-link>
+          </li>
+          <li v-else>
+            <button @click="logout" class="logout-btn">Выйти</button>
+          </li>
+
+          <li v-if="isAuthorized">
+            <router-link to="/requests">Управление заявками</router-link>
+          </li>
         </ul>
       </nav>
     </header>
@@ -22,24 +33,46 @@
 <script>
 export default {
   name: 'VueHeader',
-
   data() {
     return {
-      
+      isAuthorized: localStorage.getItem('isAuthorized') === 'true',
     };
   },
-
   mounted() {
-    
+    window.addEventListener('auth-success', this.updateAuth);
+    window.addEventListener('logout', this.updateAuth);
   },
-
+  beforeDestroy() {
+    window.removeEventListener('auth-success', this.updateAuth);
+    window.removeEventListener('logout', this.updateAuth);
+  },
   methods: {
-    
+    updateAuth() {
+      this.isAuthorized = localStorage.getItem('isAuthorized') === 'true';
+    },
+    logout() {
+      localStorage.removeItem('isAuthorized');
+      window.dispatchEvent(new Event('logout'));
+      this.$router.replace('/');
+    }
   },
 };
+
 </script>
 
 <style>
+.logout-btn {
+  background: none;
+  border: none;
+  color: #007BFF;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0;
+}
+.logout-btn:hover {
+  text-decoration: underline;
+}
+
 body {
     margin: 0;
     font-family: "DM Serif Display", serif;
@@ -875,4 +908,67 @@ body {
     gap: 10px;
     display: flex;
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 12px 24px;
+  border-radius: 0 0 8px 8px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 40px;
+  margin-right: 12px;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item a,
+.logout-btn,
+.request-btn {
+  text-decoration: none;
+  font-size: 1rem;
+  color: #34495e;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-item a:hover,
+.request-btn:hover,
+.logout-btn:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.logout-btn {
+  font-family: inherit;
+}
+
 </style>
