@@ -1,90 +1,106 @@
 <template>
-    <div class="form-page">
-      <h2>Оставьте заявку</h2>
-      <form @submit.prevent="submitForm">
-        <div>
-          <label>Имя:</label>
-          <input v-model="form.name" type="text" required />
-        </div>
-        <div>
-          <label>Телефон:</label>
-          <input
-            v-model="form.phone"
-            v-mask="'+7 ### ### ## ##'"
-            placeholder="+7 ___ ___ __ __"
-            required
-            />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input v-model="form.email" type="email" required />
-        </div>
-        <div v-if="error" class="error">{{ error }}</div>
-        <div v-if="success" class="success">{{ success }}</div>
-        <button type="submit">Отправить</button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "RequestForm",
-    data() {
-      return {
-        form: {
-          name: '',
-          phone: '',
-          email: '',
-        },
-        error: '',
-        success: '',
-      };
+  <div class="form-page">
+    <h2>Оставьте заявку</h2>
+    <form @submit.prevent="submitForm">
+      <div>
+        <label>Имя:</label>
+        <input v-model="form.name" type="text" required />
+      </div>
+      <div>
+        <label>Телефон:</label>
+        <input
+          v-model="form.phone"
+          v-mask="'+7 ### ### ## ##'"
+          placeholder="+7 ___ ___ __ __"
+          required
+        />
+      </div>
+      <div>
+        <label>Email:</label>
+        <input v-model="form.email" type="email" required />
+      </div>
+      <div v-if="error" class="error">{{ error }}</div>
+      <div v-if="success" class="success">{{ success }}</div>
+      <button type="submit">Отправить</button>
+    </form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "RequestForm",
+  data() {
+    return {
+      form: {
+        name: '',
+        phone: '',
+        email: '',
+      },
+      error: '',
+      success: '',
+    };
+  },
+  methods: {
+    validatePhone(cleanPhone) {
+      const pattern = /^\+7\d{10}$/;
+      return pattern.test(cleanPhone);
     },
-    methods: {
-      // Валидация: только +7 и 10 цифр, без пробелов
-      validatePhone(cleanPhone) {
-        const pattern = /^\+7\d{10}$/;
-        return pattern.test(cleanPhone);
-      },
-  
-      validateEmail(email) {
-        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return pattern.test(email);
-      },
-  
-      submitForm() {
-        this.error = '';
-        this.success = '';
-  
-        if (!this.form.name) {
-          this.error = 'Пожалуйста, введите имя.';
-          return;
+
+    validateEmail(email) {
+      const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return pattern.test(email);
+    },
+
+    async submitForm() {
+      this.error = '';
+      this.success = '';
+
+      if (!this.form.name) {
+        this.error = 'Пожалуйста, введите имя.';
+        return;
+      }
+
+      const cleanPhone = this.form.phone.replace(/\s+/g, '');
+
+      if (!this.validatePhone(cleanPhone)) {
+        this.error = 'Неверный формат номера. Пример: +7 999 999 99 99';
+        return;
+      }
+
+      if (!this.validateEmail(this.form.email)) {
+        this.error = 'Неверный формат электронной почты.';
+        return;
+      }
+
+      try {
+        const response = await fetch('http://lumen.local/add-request.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            client_name: this.form.name,
+            phone: cleanPhone,
+            email: this.form.email,
+            status: 'Новая'
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          this.success = 'Спасибо! Мы свяжемся с вами в рабочее время.';
+          this.form = { name: '', phone: '', email: '' };
+        } else {
+          this.error = result.message || 'Ошибка при отправке заявки.';
         }
-  
-        // Очищаем пробелы из номера
-        const cleanPhone = this.form.phone.replace(/\s+/g, '');
-  
-        if (!this.validatePhone(cleanPhone)) {
-          this.error = 'Неверный формат номера. Пример: +7 999 999 99 99';
-          return;
-        }
-  
-        if (!this.validateEmail(this.form.email)) {
-          this.error = 'Неверный формат электронной почты.';
-          return;
-        }
-  
-        // Здесь cleanPhone готов к сохранению в БД
-        console.log("Готов к записи:", cleanPhone);
-  
-        this.success = 'Спасибо! Мы свяжемся с вами в рабочее время.';
-  
-        // Очистка формы, если нужно
-        // this.form = { name: '', phone: '', email: '' };
+      } catch (e) {
+        this.error = 'Ошибка подключения к серверу.';
+        console.error(e);
       }
     }
-  };
-  </script>
+  }
+};
+</script>
+
   
   
   <style scoped>
