@@ -17,9 +17,11 @@
           <li v-if="!isAuthorized">
             <router-link to="/login">Войти</router-link>
           </li>
-          <li v-else>
+          <li v-else class="nav-item user-info">
+            <div class="user-name">{{ userName }}</div>
             <button @click="logout" class="logout-btn">Выйти</button>
           </li>
+
 
           <li v-if="isAuthorized">
             <router-link to="/requests">Управление заявками</router-link>
@@ -36,6 +38,7 @@ export default {
   data() {
     return {
       isAuthorized: localStorage.getItem('isAuthorized') === 'true',
+      userName: localStorage.getItem('userName') || '',
     };
   },
   mounted() {
@@ -49,9 +52,11 @@ export default {
   methods: {
     updateAuth() {
       this.isAuthorized = localStorage.getItem('isAuthorized') === 'true';
+      this.userName = localStorage.getItem('userName') || '';
     },
     logout() {
       localStorage.removeItem('isAuthorized');
+      localStorage.removeItem('userName');
       window.dispatchEvent(new Event('logout'));
       this.$router.replace('/');
     }
@@ -61,10 +66,13 @@ export default {
 </script>
 
 <style>
+.user-name {
+  color: #004084;
+}
 .logout-btn {
   background: none;
   border: none;
-  color: #007BFF;
+  color: #004084;
   cursor: pointer;
   font-size: 1em;
   padding: 0;
@@ -951,7 +959,7 @@ body {
 .request-btn {
   text-decoration: none;
   font-size: 1rem;
-  color: #34495e;
+  color: #003060;
   padding: 8px 12px;
   border-radius: 6px;
   transition: background-color 0.3s, color 0.3s;
@@ -970,5 +978,4 @@ body {
 .logout-btn {
   font-family: inherit;
 }
-
 </style>

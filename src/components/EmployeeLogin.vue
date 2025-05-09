@@ -44,7 +44,9 @@
   
           if (result.success) {
             localStorage.setItem('isAuthorized', 'true');
-            localStorage.setItem('userRole', result.role); // сохраним роль, если надо
+            localStorage.setItem('userRole', result.role); // сохраним роль
+            localStorage.setItem('userId', result.id); //сохраняем id
+            localStorage.setItem('userName', result.name); //имя
   
             window.dispatchEvent(new Event('auth-success'));
             this.$router.replace('/').catch(err => {

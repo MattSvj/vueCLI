@@ -36,6 +36,7 @@
           <th>Последнее обновление</th>
           <th>Комментарий менеджера</th>
           <th>Файл-договор</th>
+          <th>Файл-дизайн</th>
           <th>Статус</th>
           <th>Ответственный дизайнер</th>
           <th>Действия</th>
@@ -45,51 +46,66 @@
         <tr v-for="request in filteredRequests" :key="request.id">
           <td>{{ request.id }}</td>
 
-          <td v-if="editingId === request.id"><input v-model="request.client_name" /></td>
+          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.client_name" /></td>
           <td v-else>{{ request.client_name }}</td>
 
-          <td v-if="editingId === request.id"><input v-model="request.email" /></td>
+          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.email" /></td>
           <td v-else>{{ request.email }}</td>
 
-          <td v-if="editingId === request.id"><input v-model="request.phone" /></td>
+          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.phone" /></td>
           <td v-else>{{ request.phone }}</td>
 
-          <td v-if="editingId === request.id"><input v-model="request.design_type" /></td>
+          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.design_type" /></td>
           <td v-else>{{ request.design_type }}</td>
 
-          <td v-if="editingId === request.id"><input v-model="request.area" type="number" /></td>
-          <td v-else>{{ request.area || '—' }}</td>
+          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.area" type="number" /></td>
+          <td v-else>{{ request.area || '' }}</td>
 
-          <td v-if="editingId === request.id"><input v-model="request.budget" type="number" /></td>
-          <td v-else>{{ request.budget || '—' }}</td>
+          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.budget" type="number" /></td>
+          <td v-else>{{ request.budget || '' }}</td>
 
-          <td v-if="editingId === request.id"><input v-model="request.description" /></td>
+          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.description" /></td>
           <td v-else>{{ request.description }}</td>
 
-          <td v-if="editingId === request.id"><input v-model="request.notes" /></td>
+          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.notes" /></td>
           <td v-else>{{ request.notes || '—' }}</td>
 
           <td>{{ request.created_at }}</td>
           <td>{{ request.updated_at || '—' }}</td>
 
-          <td v-if="editingId === request.id"><input v-model="request.manager_comment" /></td>
+          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.manager_comment" /></td>
           <td v-else>{{ request.manager_comment || '—' }}</td>
 
           <td>
+          <div v-if="editingId === request.id && userRole !== 'designer'">
+            <input type="file" @change="attachFile($event, request, 'contract_file')" />
             <div v-if="request.contract_file">✔ {{ request.contract_file.name || 'Файл прикреплён' }}</div>
-            <div v-else>
-              <input type="file" @change="attachFile($event, request)" />
-            </div>
+          </div>
+          <div v-else>
+            <div v-if="request.contract_file">✔ {{ request.contract_file.name || 'Файл прикреплён' }}</div>
+            <div v-else>—</div>
+          </div>
+          </td>
+
+          <td>
+          <div v-if="editingId === request.id && userRole === 'designer'">
+            <input type="file" @change="attachFile($event, request, 'result_file')" />
+            <div v-if="request.result_file">✔ {{ request.result_file.name || 'Файл прикреплён' }}</div>
+          </div>
+          <div v-else>
+            <div v-if="request.result_file">✔ {{ request.result_file.name || 'Файл прикреплён' }}</div>
+            <div v-else>—</div>
+          </div>
           </td>
 
           <td v-if="editingId === request.id">
-            <select v-model="request.status">
+            <select v-model="request.status" @change="saveRequest(request)">
               <option v-for="status in statuses" :key="status" :value="status">{{ status }}</option>
             </select>
           </td>
           <td v-else>{{ request.status }}</td>
 
-          <td v-if="editingId === request.id">
+          <td v-if="editingId === request.id && userRole !== 'designer'">
             <select v-model="request.designer_id">
               <option :value="null">—</option>
               <option v-for="designer in designers" :key="designer.id" :value="designer.id">
@@ -100,11 +116,21 @@
           <td v-else>{{ request.designer_name || '—' }}</td>
 
           <td>
-            <button v-if="editingId !== request.id" @click="startEdit(request)">Редактировать</button>
-            <button v-else @click="saveRequest(request)">Сохранить</button>
-            <button v-if="request.contract_file" @click="sendContract(request)" class="send-button">
-              Отправить договор
-            </button>
+            <template v-if="userRole !== 'designer'">
+              <button v-if="editingId !== request.id" @click="startEdit(request)">Редактировать</button>
+              <button v-else @click="saveRequest(request)">Сохранить</button>
+              <button
+                v-if="editingId === request.id && request.contract_file"
+                @click="sendContract(request)"
+                class="send-button"
+              >
+                Отправить договор
+              </button>
+            </template>
+            <template v-else>
+              <button v-if="editingId !== request.id" @click="startEdit(request)">Редактировать</button>
+              <button v-else @click="saveRequest(request)">Сохранить</button>
+            </template>
           </td>
         </tr>
       </tbody>
@@ -117,6 +143,8 @@ export default {
   name: 'RequestManagement',
   data() {
     return {
+      userRole: localStorage.getItem('userRole') || '',
+      designerId: localStorage.getItem('userId') || '',
       searchQuery: '',
       selectedStatus: '',
       statuses: [
@@ -129,7 +157,8 @@ export default {
       ],
       requests: [],
       designers: [],
-      editingId: null
+      editingId: null,
+      autoUpdateInterval: null
     };
   },
   computed: {
@@ -150,7 +179,21 @@ export default {
   methods: {
     async fetchRequests() {
       try {
-        const response = await fetch('http://lumen.local/get_requests.php');
+        const role = localStorage.getItem('userRole');
+        const userId = localStorage.getItem('userId');
+
+        const body = role === 'designer'
+          ? JSON.stringify({ designer_id: userId })
+          : null;
+
+        const response = await fetch('http://lumen.local/get_requests.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: body
+        });
+
         const data = await response.json();
         this.requests = data;
       } catch (err) {
@@ -172,9 +215,23 @@ export default {
     async saveRequest(request) {
       try {
         const formData = new FormData();
+
         for (const key in request) {
           if (Object.prototype.hasOwnProperty.call(request, key)) {
-            formData.append(key, request[key] ?? '');
+            let value = request[key];
+
+            if (key === 'contract_file' && value instanceof File) {
+              formData.append('contract_file', value);
+            }
+            if (key === 'result_file' && value instanceof File) {
+              formData.append('result_file', value);
+            }
+            else {
+              if (value === null || value === undefined || Number.isNaN(value)) {
+                value = '';
+              }
+              formData.append(key, value);
+            }
           }
         }
 
@@ -196,24 +253,60 @@ export default {
         alert('Ошибка при сохранении заявки');
       }
     },
-    attachFile(event, request) {
+    attachFile(event, request, fileType) {
       const file = event.target.files[0];
       if (file) {
-        request.contract_file = file;
+        request[fileType] = file;
         request.updated_at = new Date().toISOString().split('T')[0];
       }
     },
-    sendContract(request) {
-      alert(`Договор отправлен клиенту на почту: ${request.email}`);
-      // В будущем: отправка файла на сервер, email и логгирование
+    async sendContract(request) {
+      try {
+        const formData = new FormData();
+        for (const key in request) {
+          if (Object.prototype.hasOwnProperty.call(request, key)) {
+            let value = request[key];
+            if (value === null || value === undefined || Number.isNaN(value)) {
+              value = '';
+            }
+            formData.append(key, value);
+          }
+        }
+
+        formData.append('force_send_contract', '1'); // <- ключевая строка
+
+        const res = await fetch('http://lumen.local/update_request.php', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await res.json();
+        if (result.success) {
+          alert('Договор отправлен клиенту.');
+        } else {
+          alert('Ошибка при отправке договора.');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Ошибка при отправке.');
+      }
     }
   },
   mounted() {
     this.fetchRequests();
     this.fetchDesigners();
+    this.autoUpdateInterval = setInterval(() => {
+      if (this.editingId === null) {
+        this.fetchRequests();
+      }
+    }, 10000); // каждые 10 секунд
+  },
+  beforeUnmount() {
+    clearInterval(this.autoUpdateInterval);
   }
 };
 </script>
+
 
 
   
