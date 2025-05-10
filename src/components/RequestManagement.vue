@@ -3,15 +3,18 @@
     <h2>Управление заявками</h2>
 
     <div class="filters">
-      <label for="statusFilter">Фильтр по статусу:</label>
       <select v-model="selectedStatus" id="statusFilter">
         <option value="">Все</option>
-        <option v-for="status in statuses" :key="status" :value="status">
+        <option
+          v-for="status in statuses"
+          :key="status"
+          :value="status"
+          :class="statusClass(status)"
+        >
           {{ status }}
         </option>
       </select>
 
-      <label for="search" style="margin-left: 20px;">Поиск:</label>
       <input
         id="search"
         v-model="searchQuery"
@@ -24,21 +27,20 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Имя клиента</th>
+          <th>Имя</th>
           <th>Email</th>
           <th>Телефон</th>
           <th>Тип дизайна</th>
-          <th>Площадь (м²)</th>
+          <th>Площадь</th>
           <th>Бюджет</th>
           <th>Описание</th>
-          <th>Пожелания</th>
-          <th>Дата заявки</th>
-          <th>Последнее обновление</th>
-          <th>Комментарий менеджера</th>
+          <th>Дата</th>
+          <th>Обновление</th>
+          <th>Комментарий</th>
           <th>Файл-договор</th>
           <th>Файл-дизайн</th>
           <th>Статус</th>
-          <th>Ответственный дизайнер</th>
+          <th>Дизайнер</th>
           <th>Действия</th>
         </tr>
       </thead>
@@ -58,20 +60,18 @@
           <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.design_type" /></td>
           <td v-else>{{ request.design_type }}</td>
 
-          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.area" type="number" /></td>
+          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.area" type="number" class="small-input" /></td>
           <td v-else>{{ request.area || '' }}</td>
 
-          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.budget" type="number" /></td>
+          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.budget" type="number" class="small-input" /></td>
           <td v-else>{{ request.budget || '' }}</td>
 
           <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.description" /></td>
           <td v-else>{{ request.description }}</td>
 
-          <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.notes" /></td>
-          <td v-else>{{ request.notes || '—' }}</td>
+          <td :title="request.created_at">{{ formatDateShort(request.created_at) }}</td>
+          <td :title="request.updated_at">{{ formatDateShort(request.updated_at) || '—' }}</td>
 
-          <td>{{ request.created_at }}</td>
-          <td>{{ request.updated_at || '—' }}</td>
 
           <td v-if="editingId === request.id && userRole !== 'designer'"><input v-model="request.manager_comment" /></td>
           <td v-else>{{ request.manager_comment || '—' }}</td>
@@ -79,10 +79,10 @@
           <td>
           <div v-if="editingId === request.id && userRole !== 'designer'">
             <input type="file" @change="attachFile($event, request, 'contract_file')" />
-            <div v-if="request.contract_file">✔ {{ request.contract_file.name || 'Файл прикреплён' }}</div>
+            <div v-if="request.contract_file">✔ {{ request.contract_file.name || 'Файл' }}</div>
           </div>
           <div v-else>
-            <div v-if="request.contract_file">✔ {{ request.contract_file.name || 'Файл прикреплён' }}</div>
+            <div v-if="request.contract_file">✔ {{ request.contract_file.name || 'Файл' }}</div>
             <div v-else>—</div>
           </div>
           </td>
@@ -90,20 +90,34 @@
           <td>
           <div v-if="editingId === request.id && userRole === 'designer'">
             <input type="file" @change="attachFile($event, request, 'result_file')" />
-            <div v-if="request.result_file">✔ {{ request.result_file.name || 'Файл прикреплён' }}</div>
+            <div v-if="request.result_file">✔ {{ request.result_file.name || 'Файл' }}</div>
           </div>
           <div v-else>
-            <div v-if="request.result_file">✔ {{ request.result_file.name || 'Файл прикреплён' }}</div>
+            <div v-if="request.result_file">✔ {{ request.result_file.name || 'Файл' }}</div>
             <div v-else>—</div>
           </div>
           </td>
 
           <td v-if="editingId === request.id">
-            <select v-model="request.status" @change="saveRequest(request)">
-              <option v-for="status in statuses" :key="status" :value="status">{{ status }}</option>
+            <select
+              v-model="request.status"
+              :class="statusClass(request.status)"
+              @change="saveRequest(request)"
+            >
+              <option
+                v-for="status in statuses"
+                :key="status"
+                :value="status"
+                :class="statusClass(status)"
+              >
+                {{ status }}
+              </option>
             </select>
           </td>
-          <td v-else>{{ request.status }}</td>
+
+          <td v-else :class="statusClass(request.status)">
+            {{ request.status }}
+          </td>
 
           <td v-if="editingId === request.id && userRole !== 'designer'">
             <select v-model="request.designer_id">
@@ -177,6 +191,21 @@ export default {
     }
   },
   methods: {
+    formatDateShort(datetime) {
+      if (!datetime) return '';
+      return new Date(datetime).toLocaleDateString(); // или toISOString().slice(0, 10)
+    },
+    statusClass(status) {
+    switch (status) {
+      case 'Новая': return 'status-new';
+      case 'В обработке': return 'status-processing';
+      case 'Клиент недоступен': return 'status-unreachable';
+      case 'Отказ': return 'status-declined';
+      case 'Договор в обработке': return 'status-contract';
+      case 'Завершено': return 'status-done';
+      default: return '';
+    }
+  },
     async fetchRequests() {
       try {
         const role = localStorage.getItem('userRole');
@@ -351,5 +380,217 @@ export default {
   .send-button:hover {
     background-color: #2163a8;
   }
+
+
+  .request-management {
+  max-width: 95%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.request-management h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.search-input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.requests-table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+.requests-table table {
+  border-collapse: collapse;
+  min-width: 1200px;
+  width: 100%;
+}
+
+.requests-table th, .requests-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  vertical-align: middle;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.requests-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+button {
+  padding: 5px 10px;
+  margin: 2px;
+  border: none;
+  border-radius: 4px;
+  background-color: #0077cc;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+.send-button {
+  background-color: #28a745;
+}
+
+.send-button:hover {
+  background-color: #218838;
+}
+
+input[type="file"] {
+  max-width: 180px;
+}
+
+@media screen and (max-width: 768px) {
+  .requests-table table {
+    min-width: unset;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Цвета статусов */
+.status-new {
+  background-color: #e0e0e0;
+}
+
+.status-processing {
+  background-color: #cce5ff;
+}
+
+.status-unreachable {
+  background-color: #ffeeba;
+}
+
+.status-declined {
+  background-color: #f8d7da;
+}
+
+.status-contract {
+  background-color: #e2d6f3;
+}
+
+.status-done {
+  background-color: #d4edda;
+}
+
+/* Ограничение размеров input/select */
+.requests-table input,
+.requests-table select,
+.requests-table textarea {
+  width: 100%;
+  max-width: 160px;
+  box-sizing: border-box;
+  padding: 4px;
+  font-size: 14px;
+}
+
+/* Цвета для статусов */
+.status-new           { background-color: #e0e0e0; }
+.status-processing    { background-color: #cce5ff; }
+.status-unreachable   { background-color: #ffeeba; }
+.status-declined      { background-color: #f8d7da; }
+.status-contract      { background-color: #e2d6f3; }
+.status-done          { background-color: #d4edda; }
+
+/* Обрезка длинных текстов с многоточием */
+.ellipsis-cell {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Маленькие input для area и budget */
+.small-input {
+  width: 100%;
+  max-width: 80px;
+  padding: 4px;
+  text-align: right;
+  box-sizing: border-box;
+}
+
+/* Цвета для селекта и отображения статуса */
+.status-label, .status-select {
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  font-weight: 500;
+  border: none;
+  color: #000;
+}
+
+.status-new           { background-color: #e0e0e0; }
+.status-processing    { background-color: #cce5ff; }
+.status-unreachable   { background-color: #fff3cd; }
+.status-declined      { background-color: #f8d7da; }
+.status-contract      { background-color: #e2d6f3; }
+.status-done          { background-color: #d4edda; }
+
+
+.requests-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  table-layout: fixed;
+}
+
+.requests-table th,
+.requests-table td {
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  word-wrap: break-word;
+  vertical-align: top;
+}
+
+.requests-table th {
+  background-color: #f0f0f0;
+}
+
+.compact-table th,
+.compact-table td {
+  font-size: 11px;
+}
+
+.small-input {
+  max-width: 60px;
+  font-size: 11px;
+}
+
+.action-buttons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 4px;
+  font-size: 14px;
+}
   </style>
   
