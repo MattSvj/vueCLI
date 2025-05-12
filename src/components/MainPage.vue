@@ -480,9 +480,6 @@ body {
     height: auto;
   }
   
-  .article-info {
-    
-  }
   
   .article-category {
     position: relative;
@@ -545,9 +542,6 @@ body {
     
   }
   
-  .footer-links {
-    
-  }
   
   .footer-links a {
     

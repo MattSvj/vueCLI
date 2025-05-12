@@ -10,6 +10,7 @@ import RequestForm from './components/RequestForm.vue';
 import EmployeeLogin from '@/components/EmployeeLogin.vue';
 import RequestManagement from '@/components/RequestManagement.vue';
 
+
 Vue.use(Router);
 
 export default new Router({
@@ -59,10 +60,11 @@ export default new Router({
         name: "Project",
         component: Project
     },
-    {
-        path: "/ProjectDetails",
-        name: "ProjectDetails",
-        component: ProjectDetails
-    }
+  {
+    path: '/projects/:name',
+    name: 'ProjectDetails',
+    component: ProjectDetails,
+    props: true
+  }
   ]
 });
